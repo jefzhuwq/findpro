@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 2015-8-17 13:02:21 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="com.mediabox.findpro.data.User" table="user" catalog="findpro" optimistic-lock="version">
+        <id name="userid" type="java.lang.Integer">
+            <column name="USERID" />
+            <generator class="identity" />
+        </id>
+        <property name="password" type="string">
+            <column name="PASSWORD" />
+        </property>
+        <property name="username" type="string">
+            <column name="USERNAME" />
+        </property>
+        <set name="contacts" table="contact" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="USERID" />
+            </key>
+            <one-to-many class="com.mediabox.findpro.data.Contact" />
+        </set>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+                                         "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+	<session-factory name="sessionFactory">
+		<property name="hibernate.connection.password">User@123</property>
+		<property name="hibernate.connection.url">jdbc:mysql://localhost:3306/findpro</property>
+		<property name="hibernate.connection.username">root</property>
+		<property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+		<property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+		<property name="show_sql">true</property>
+
+		<!-- <mapping class="com.mediabox.findpro.data.Company" resource="com/mediabox/findpro/data/Company.hbm.xml"/> -->
+		<!-- <mapping class="com.mediabox.findpro.data.Contact" resource="com/mediabox/findpro/data/Contact.hbm.xml"/> -->
+		<!-- <mapping class="com.mediabox.findpro.data.Employee" resource="com/mediabox/findpro/data/Employee.hbm.xml"/> -->
+		<!-- <mapping class="com.mediabox.findpro.data.Project" resource="com/mediabox/findpro/data/Project.hbm.xml"/> -->
+		<!-- <mapping class="com.mediabox.findpro.data.User" resource="com/mediabox/findpro/data/User.hbm.xml"/> -->
+
+		<mapping resource="com/mediabox/findpro/data/Company.hbm.xml" />
+		<mapping resource="com/mediabox/findpro/data/Contact.hbm.xml" />
+		<mapping resource="com/mediabox/findpro/data/Employee.hbm.xml" />
+		<mapping resource="com/mediabox/findpro/data/Project.hbm.xml" />
+		<mapping resource="com/mediabox/findpro/data/User.hbm.xml" />
+	</session-factory>
+</hibernate-configuration>
