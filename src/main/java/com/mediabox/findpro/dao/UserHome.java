@@ -2,46 +2,51 @@ package com.mediabox.findpro.dao;
 
 // Generated 2015-8-16 15:04:42 by Hibernate Tools 4.3.1
 
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
+import java.util.UUID;
 
-import javax.naming.InitialContext;
+import javax.sql.DataSource;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.LockMode;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Example;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Repository;
 
 import com.mediabox.findpro.data.User;
+import com.mediabox.findpro.util.EncryptionHelper;
 
 /**
  * Home object for domain model class User.
  * @see com.mediabox.findpro.dao.User
  * @author Hibernate Tools
  */
+@Repository("userDao")
 public class UserHome {
-
 	private static final Log log = LogFactory.getLog(UserHome.class);
-
-	private SessionFactory sessionFactory;
-
+	
 	@Autowired
-	public void setSessionFactory(SessionFactory sf) {
-		this.sessionFactory = sf;
+	private SessionFactory sessionFactory;
+	
+	public UserHome() {
+	}
+	
+	public UserHome(SessionFactory sessionFactory) {
+		this.sessionFactory = sessionFactory;
 	}
 	 
-	protected SessionFactory getSessionFactory() {
-		try {
-			return (SessionFactory) new InitialContext()
-					.lookup("SessionFactory");
-		} catch (Exception e) {
-			log.error("Could not locate SessionFactory in JNDI", e);
-			throw new IllegalStateException(
-					"Could not locate SessionFactory in JNDI");
-		}
-	}
+	private EncryptionHelper encHelper = new EncryptionHelper();
 
 	public void persist(User transientInstance) {
 		log.debug("persisting User instance");
@@ -132,9 +137,65 @@ public class UserHome {
 		}
 	}
 	
-	public void addUser(User user) {
+	public boolean addUser(User user) {
+		List<User> userList = this.getUserByUserName(user.getUsername());
+		if(userList.size()!=0) {
+			return false;
+		}
 		Session session = this.sessionFactory.getCurrentSession();
-        session.persist(user);
+		session.persist(user);
 		log.info("User saved successfully, Person Details=" + user);
+		return true;
 	}
+	
+	private List<User> getUserByUserName(String userName) {
+		Session session = this.sessionFactory.getCurrentSession();
+		List<User> userList = session.createCriteria(User.class).add(Restrictions.eq("username", userName)).list();
+		return userList;
+	}
+	
+	public String login(String userName, String password, boolean isEncrypted) throws NoSuchAlgorithmException, UnsupportedEncodingException {
+		Session session = this.sessionFactory.getCurrentSession();
+		if (!isEncrypted) {
+			password = encHelper.encrypt(password);
+		}
+		// sample of how to use hql
+//		Query query = session.createSQLQuery(
+//				"select * from User u where u.username = :userName and u.password = :password")
+//				.addEntity(User.class)
+//				.setParameter("userName", userName).setParameter("password", password);
+//		User user = (User)query.uniqueResult();
+		// here's the samlpe using criteria
+		User user = (User)session.createCriteria(User.class).add(Restrictions.eq("username", userName)).add(Restrictions.eq("password", password)).uniqueResult();
+		if (user != null) {
+			String sessionID = UUID.randomUUID().toString();
+			return sessionID;
+		} else {
+			return null;
+		}
+	}
+	
+	private JdbcTemplate jdbcTemplate;
+	
+	@Autowired
+    public void setDataSource(DataSource dataSource) {
+        this.jdbcTemplate = new JdbcTemplate(dataSource);
+    }
+	
+	public User getUserInfo(String username){
+    	String sql = "SELECT u.username name, u.password pass, 'USER' role FROM "+
+    			     "comp_users u INNER JOIN comp_authorities a on u.username=a.username WHERE "+
+    			     "u.enabled =1 and u.username = ?";
+    	User userInfo = (User)jdbcTemplate.queryForObject(sql, new Object[]{username},
+    		new RowMapper<User>() {
+	            public User mapRow(ResultSet rs, int rowNum) throws SQLException {
+	                User user = new User();
+	                user.setUsername(rs.getString("name"));
+	                user.setPassword(rs.getString("pass"));
+//	                user.setRole(rs.getString("role"));
+	                return user;
+	            }
+        });
+    	return userInfo;
+    }
 }

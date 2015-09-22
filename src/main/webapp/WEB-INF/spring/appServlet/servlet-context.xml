@@ -75,4 +75,5 @@
 	<beans:bean id="userService" class="com.mediabox.findpro.service.UserService">
 		<beans:property name="userDAO" ref="userDAO"></beans:property>
 	</beans:bean>
+
 </beans:beans>

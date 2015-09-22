@@ -44,6 +44,6 @@
 		</tr>
 	</table>
 </form:form>
-
+<c:out value="${error}"/>
 </body>
 </html>
