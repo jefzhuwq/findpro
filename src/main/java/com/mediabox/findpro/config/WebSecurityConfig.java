@@ -17,31 +17,22 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 
 import com.mediabox.findpro.service.AuthenticationService;
 
-//@Configuration
-//@ComponentScan("com.mediabox.findpro")
-//@EnableWebSecurity
-//@EnableGlobalMethodSecurity(prePostEnabled=true)
-//@PropertySource("classpath:jdbc.properties")
+@Configuration
+@EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	DataSource dataSource;
-	
-	@Autowired
-	AuthenticationService authenticationService;
-	
-	@Autowired
-    Environment env;
-	
+		
 	@Autowired
 	public void configAuthentication(AuthenticationManagerBuilder auth) throws Exception {
-		ShaPasswordEncoder encoder = new ShaPasswordEncoder();
-        auth.userDetailsService(authenticationService).passwordEncoder(encoder);
-//	  auth.jdbcAuthentication().dataSource(dataSource)
-//		.usersByUsernameQuery(
-//			"select username,password from user where username=?")
-//		.authoritiesByUsernameQuery(
-//			"select username, role from user_roles where username=?");
+//		ShaPasswordEncoder encoder = new ShaPasswordEncoder();
+//        auth.userDetailsService(authenticationService).passwordEncoder(encoder);
+	  auth.jdbcAuthentication().dataSource(dataSource)
+		.usersByUsernameQuery(
+			"select username,password from user where username=?")
+		.authoritiesByUsernameQuery(
+			"select username, role from user_roles where username=?");
 //		auth.inMemoryAuthentication().withUser("admin").password("password")
 //				.roles("ADMIN", "USER").and().withUser("user")
 //				.password("password").roles("USER");
@@ -50,7 +41,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 	  http.authorizeRequests()
-		.antMatchers("/account**").access("hasRole('ROLE_ADMIN')")
+		.antMatchers("/account/**").access("hasRole('ROLE_ADMIN')")
 //		.antMatchers("/register").permitAll().anyRequest().authenticated()
 		.and()
 		  .formLogin().loginPage("/login").failureUrl("/login?error")
@@ -63,14 +54,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		  .csrf();
 	}
 	
-	@Bean
-	public DataSource getDataSource() {
-	    BasicDataSource dataSource = new BasicDataSource();
-	    dataSource.setDriverClassName(env.getProperty("jdbc.driverClassName"));
-	    dataSource.setUrl(env.getProperty("jdbc.url"));
-	    dataSource.setUsername(env.getProperty("jdbc.username"));
-	    dataSource.setPassword(env.getProperty("jdbc.password"));
-	    return dataSource;
-	}
+//	@Bean
+//	public DataSource getDataSource() {
+//	    BasicDataSource dataSource = new BasicDataSource();
+//	    dataSource.setDriverClassName(env.getProperty("jdbc.driverClassName"));
+//	    dataSource.setUrl(env.getProperty("jdbc.url"));
+//	    dataSource.setUsername(env.getProperty("jdbc.username"));
+//	    dataSource.setPassword(env.getProperty("jdbc.password"));
+//	    return dataSource;
+//	}
 }
 

@@ -35,7 +35,7 @@ public class LoginController extends BasicController {
     public ModelAndView loginPost(Model model, @ModelAttribute(LOGIN_FORM) LoginForm loginForm) throws NoSuchAlgorithmException, UnsupportedEncodingException {
         String sessionID = userService.login(loginForm.getUsername(), loginForm.getPassword(), false);
 		if (sessionID != null && sessionID != "") {
-	        ModelAndView mav = new ModelAndView("/home");
+	        ModelAndView mav = new ModelAndView("/menu");
 	        mav.addObject("sessionID", sessionID);
 	        return mav;
         } else {
@@ -72,5 +72,32 @@ public class LoginController extends BasicController {
 		model.addObject("message", "This page is for ROLE_ADMIN only!");
 		model.setViewName("admin");
 		return "account";
+	}
+	
+	@RequestMapping(value = "menu", method = RequestMethod.GET)
+	public String menuGet() {
+		ModelAndView model = new ModelAndView();
+		model.addObject("title", "Spring Security Login Form - Database Authentication");
+		model.addObject("message", "This page is for ROLE_ADMIN only!");
+		model.setViewName("admin");
+		return "menu";
+	}
+	
+	@RequestMapping(value = "cart", method = RequestMethod.GET)
+	public String cartGet() {
+		ModelAndView model = new ModelAndView();
+		model.addObject("title", "Spring Security Login Form - Database Authentication");
+		model.addObject("message", "This page is for ROLE_ADMIN only!");
+		model.setViewName("admin");
+		return "cart";
+	}
+	
+	@RequestMapping(value = "checkout", method = RequestMethod.GET)
+	public String checkoutGet() {
+		ModelAndView model = new ModelAndView();
+		model.addObject("title", "Spring Security Login Form - Database Authentication");
+		model.addObject("message", "This page is for ROLE_ADMIN only!");
+		model.setViewName("admin");
+		return "checkout";
 	}
 }
