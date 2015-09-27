@@ -13,6 +13,7 @@
 
 <div class="container-fluid">
 <h1>Checkout</h1>
+<a href="cart" class="btn btn-primary" role="button">Back to cart</a>
 </div>
 <div class="container-fluid">
 	<div class="jumbotron">

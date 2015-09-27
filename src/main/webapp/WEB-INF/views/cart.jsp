@@ -14,7 +14,8 @@
 <div class="container-fluid">
 <p><h1>Shopping Cart</h1></p>
 Subtotal: $123.58
-<a href="#" class="btn btn-primary" role="button">Proceed to checkout</a>
+<a href="checkout" class="btn btn-primary" role="button">Proceed to checkout</a>
+<a href="menu" class="btn btn-primary" role="button">Continue shopping</a>
 </div>
 <div class="container-fluid">
 	<div class="jumbotron">

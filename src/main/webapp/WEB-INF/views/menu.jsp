@@ -4,7 +4,7 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 	<title>Insert title here</title>
 	<jsp:include page="header.jsp"></jsp:include>
-	<link rel="stylesheet" href="http://getbootstrap.com/examples/dashboard/dashboard.css" />
+	<link rel="stylesheet" href="resources/core/css/dashboard.css" />
 </head>
 <body>
 
@@ -33,7 +33,7 @@
 
 	  <div class="row placeholders">
 		<div class="col-xs-6 col-sm-3 placeholder">
-		  <img src="" class="img-responsive" style="width: 260px; height: 280px;">
+		  <img src="http://img.4008107107.com/shop/169188/dish/5.jpg" class="img-responsive" >
 		  <h4>Soup 1</h4>
 		  <p><span class="text-muted">Description</span></p>
 		  <p>
@@ -41,7 +41,7 @@
 		  </p>
 		</div>
 		<div class="col-xs-6 col-sm-3 placeholder">
-		  <img src="" class="img-responsive" style="width: 260px; height: 280px;">
+		  <img src="" class="img-responsive">
 		  <h4>Soup 1</h4>
 		  <p><span class="text-muted">Description</span></p>
 		  <p>
@@ -49,7 +49,7 @@
 		  </p>
 		</div>
 		<div class="col-xs-6 col-sm-3 placeholder">
-		  <img src="" class="img-responsive" style="width: 260px; height: 280px;">
+		  <img src="" class="img-responsive">
 		  <h4>Soup 1</h4>
 		  <p><span class="text-muted">Description</span></p>
 		  <p>
@@ -57,7 +57,7 @@
 		  </p>
 		</div>
 		<div class="col-xs-6 col-sm-3 placeholder">
-		  <img src="" class="img-responsive" style="width: 260px; height: 280px;">
+		  <img src="" class="img-responsive">
 		  <h4>Soup 1</h4>
 		  <p><span class="text-muted">Description</span></p>
 		  <p>
@@ -67,7 +67,7 @@
 	  </div>
       <div class="row placeholders">
 		<div class="col-xs-6 col-sm-3 placeholder">
-		  <img src="" class="img-responsive" style="width: 260px; height: 280px;">
+		  <img src="" class="img-responsive">
 		  <h4>Soup 1</h4>
 		  <p><span class="text-muted">Description</span></p>
 		  <p>
@@ -78,5 +78,8 @@
 	 </div>
   </div>
 </div>
+
+<jsp:include page="footer.jsp"></jsp:include>
+
 </body>
 </html>

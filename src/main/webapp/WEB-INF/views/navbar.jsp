@@ -7,13 +7,12 @@
 		<span class="icon-bar"></span>
 		<span class="icon-bar"></span>
 	  </button>
-	  <a class="navbar-brand" href="#">My Mini Hotpot</a>
+	  <a class="navbar-brand" href="home">My Mini Hotpot</a>
 	</div>
 	<div id="navbar" class="navbar-collapse collapse">
 	  <ul class="nav navbar-nav navbar-right">
-		<li><a href="#">Sign in</a></li>
-		<li><a href="#">My Cart</a></li>
-		<li><a href="#">Profile</a></li>
+		<li><a href="login">Sign in</a></li>
+		<li><a href="cart">My Cart</a></li>
 	  </ul>
 	  <!--
 	  <form class="navbar-form navbar-right">
