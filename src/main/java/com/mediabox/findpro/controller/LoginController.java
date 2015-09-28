@@ -32,8 +32,15 @@ public class LoginController extends BasicController {
 	}
 	
 	@RequestMapping(value = "login", method = RequestMethod.POST)
-    public ModelAndView loginPost(Model model, @ModelAttribute(LOGIN_FORM) LoginForm loginForm) throws NoSuchAlgorithmException, UnsupportedEncodingException {
-        String sessionID = userService.login(loginForm.getUsername(), loginForm.getPassword(), false);
+    public ModelAndView loginPost(Model model, @ModelAttribute(LOGIN_FORM) LoginForm loginForm) {
+        
+		String sessionID = null;
+		try {
+			sessionID = userService.login(loginForm.getUsername(), loginForm.getPassword(), false);
+		} catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		if (sessionID != null && sessionID != "") {
 	        ModelAndView mav = new ModelAndView("/menu");
 	        mav.addObject("sessionID", sessionID);

@@ -6,12 +6,12 @@
 	<jsp:include page="header.jsp"></jsp:include>
 	<%@page import="com.mediabox.findpro.controller.LoginController"%>
 	<%@page import="com.mediabox.findpro.form.LoginForm"%>
-	<link rel="stylesheet" href="http://getbootstrap.com/examples/signin/signin.css"></link>
+	<link rel="stylesheet" href="resources/core/css/signin.css"></link>
 </head>
 <body>
 
 <jsp:include page="navbar.jsp"></jsp:include>
-
+<c:set var="loginFormName"><%=LoginController.LOGIN_FORM%></c:set>
 <div class="container">
 	<div id="loginbox" style="margin-top: 50px;"
 		class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
@@ -26,19 +26,17 @@
 			
 			<div style="padding-top: 30px" class="panel-body">
 				<div style="display: none" id="login-alert" class="alert alert-danger col-sm-12"></div>
-				<form id="loginform" class="form-horizontal" role="form">
+				<form:form id="loginform" class="form-horizontal" role="form" method="post" commandName="${loginFormName}">
 					<div style="margin-bottom: 25px" class="input-group">
-						<span class="input-group-addon"><i
-							class="glyphicon glyphicon-user"></i></span> <input id="login-username"
+						<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+						<input id="login-username"
 							type="text" class="form-control" name="username" value=""
 							placeholder="username or email">
 					</div>
 
 					<div style="margin-bottom: 25px" class="input-group">
-						<span class="input-group-addon"><i
-							class="glyphicon glyphicon-lock"></i></span> <input id="login-password"
-							type="password" class="form-control" name="password"
-							placeholder="password">
+						<span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span> 
+						<input id="login-password" type="password" class="form-control" name="password" placeholder="password">
 					</div>
 
 					<div class="input-group">
@@ -51,11 +49,9 @@
 
 					<div style="margin-top: 10px" class="form-group">
 						<!-- Button -->
-
 						<div class="col-sm-12 controls">
-							<a id="btn-login" href="#" class="btn btn-success">Login </a> <a
-								id="btn-fblogin" href="#" class="btn btn-primary">Login
-								with Facebook</a>
+							<input id="btn-login" type="submit" class="btn btn-success" value="Login" />
+							<a id="btn-fblogin" href="#" class="btn btn-primary">Login with Facebook</a>
 						</div>
 					</div>
 
@@ -69,7 +65,7 @@
 							</div>
 						</div>
 					</div>
-				</form>
+				</form:form>
 			</div>
 		</div>
 	</div>

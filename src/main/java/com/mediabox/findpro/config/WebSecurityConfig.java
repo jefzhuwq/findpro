@@ -17,9 +17,9 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 
 import com.mediabox.findpro.service.AuthenticationService;
 
-@Configuration
-@EnableWebSecurity
-public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+//@Configuration
+//@EnableWebSecurity
+public class WebSecurityConfig {//extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	DataSource dataSource;
@@ -38,7 +38,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //				.password("password").roles("USER");
 	}
 
-	@Override
+	//@Override
 	protected void configure(HttpSecurity http) throws Exception {
 	  http.authorizeRequests()
 		.antMatchers("/account/**").access("hasRole('ROLE_ADMIN')")
