@@ -6,6 +6,7 @@ import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -14,7 +15,6 @@ import javax.sql.DataSource;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.LockMode;
-import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Example;
@@ -198,4 +198,16 @@ public class UserHome {
         });
     	return userInfo;
     }
+	
+	@SuppressWarnings("unchecked")
+	public User findByUserName(String userName) {
+		List<User> users = new ArrayList<>();
+		users = sessionFactory.getCurrentSession().createQuery("from User where username=?").setParameter(0, userName)
+				.list();
+		if (users.size() > 0) {
+			return users.get(0);
+		} else {
+			return null;
+		}
+	}
 }

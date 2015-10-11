@@ -7,6 +7,7 @@
 	<%@page import="com.mediabox.findpro.controller.LoginController"%>
 	<%@page import="com.mediabox.findpro.form.LoginForm"%>
 	<link rel="stylesheet" href="resources/core/css/signin.css"></link>
+	
 </head>
 <body>
 
@@ -59,12 +60,12 @@
 						<div class="col-md-12 control">
 							<div
 								style="border-top: 1px solid #888; padding-top: 15px; font-size: 85%">
-								Don't have an account! <a href="#"
-									onClick="$('#loginbox').hide(); $('#signupbox').show()">
-									Sign Up Here </a>
+								Don't have an account! 
+								<a href="signup">Sign Up Here </a>
 							</div>
 						</div>
 					</div>
+					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 				</form:form>
 			</div>
 		</div>
@@ -82,7 +83,7 @@
 				</div>
 			</div>
 			<div class="panel-body">
-				<form id="signupform" class="form-horizontal" role="form">
+				<form:form id="registerform" class="form-horizontal" role="form" method="post">
 					<div id="signupalert" style="display: none"
 						class="alert alert-danger">
 						<p>Error:</p>
@@ -133,9 +134,7 @@
 					<div class="form-group">
 						<!-- Button -->
 						<div class="col-md-offset-3 col-md-9">
-							<button id="btn-signup" type="button" class="btn btn-info">
-								<i class="icon-hand-right"></i> &nbsp Sign Up
-							</button>
+							<input id="btn-signup" type="submit" class="btn btn-info" value="Sign Up">
 							<span style="margin-left: 8px;">or</span>
 						</div>
 					</div>
@@ -149,7 +148,8 @@
 							</button>
 						</div>
 					</div>
-				</form>
+					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+				</form:form>
 			</div>
 		</div>
 	</div>
@@ -158,5 +158,6 @@
 <c:out value="${error}"/>
 
 <jsp:include page="footer.jsp"></jsp:include>
+
 </body>
 </html>

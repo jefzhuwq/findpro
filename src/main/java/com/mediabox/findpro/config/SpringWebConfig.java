@@ -1,8 +1,5 @@
 package com.mediabox.findpro.config;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Properties;
 
 import javax.sql.DataSource;
@@ -12,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.hibernate4.HibernateTransactionManager;
 import org.springframework.orm.hibernate4.LocalSessionFactoryBuilder;
@@ -28,6 +26,7 @@ import com.mediabox.findpro.dao.UserHome;
 @Configuration
 @ComponentScan({ "com.mediabox.findpro" })
 @EnableTransactionManagement
+@Import({ WebSecurityConfig.class })
 public class SpringWebConfig extends WebMvcConfigurerAdapter {
 	
 	@Override

@@ -1,6 +1,6 @@
 package com.mediabox.findpro.data;
 
-// Generated 2015-9-21 15:03:26 by Hibernate Tools 4.3.1
+// Generated 2015-10-10 13:44:56 by Hibernate Tools 4.3.1
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -18,6 +18,7 @@ public class Menu implements java.io.Serializable {
 	private String name;
 	private String description;
 	private Integer parentMenu;
+	private String imageUrl;
 
 	public Menu() {
 	}
@@ -26,11 +27,13 @@ public class Menu implements java.io.Serializable {
 		this.idmenu = idmenu;
 	}
 
-	public Menu(int idmenu, String name, String description, Integer parentMenu) {
+	public Menu(int idmenu, String name, String description,
+			Integer parentMenu, String imageUrl) {
 		this.idmenu = idmenu;
 		this.name = name;
 		this.description = description;
 		this.parentMenu = parentMenu;
+		this.imageUrl = imageUrl;
 	}
 
 	@Id
@@ -68,6 +71,15 @@ public class Menu implements java.io.Serializable {
 
 	public void setParentMenu(Integer parentMenu) {
 		this.parentMenu = parentMenu;
+	}
+
+	@Column(name = "image_url", length = 45)
+	public String getImageUrl() {
+		return this.imageUrl;
+	}
+
+	public void setImageUrl(String imageUrl) {
+		this.imageUrl = imageUrl;
 	}
 
 }

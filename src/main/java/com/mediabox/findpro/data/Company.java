@@ -1,6 +1,6 @@
 package com.mediabox.findpro.data;
 
-// Generated 2015-9-21 15:03:26 by Hibernate Tools 4.3.1
+// Generated 2015-10-10 13:44:56 by Hibernate Tools 4.3.1
 
 import java.util.HashSet;
 import java.util.Set;

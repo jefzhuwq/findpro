@@ -8,24 +8,19 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.mediabox.findpro.dao.UserHome;
-import com.mediabox.findpro.data.User;
 
 @Service
-public class UserService {
-	private UserHome userDAO;
-	
+public class AccountService {
 	@Autowired
-	public void setUserDAO(UserHome userDAO) {
-        this.userDAO = userDAO;
-    }
+	private UserHome userDao;
 	
 	@Transactional
 	public String login(String userName, String password, boolean isEncrypted) throws NoSuchAlgorithmException, UnsupportedEncodingException {
-		return this.userDAO.login(userName, password, isEncrypted);
+		return this.userDao.login(userName, password, isEncrypted);
 	}
 	
 	@Transactional
-    public void register(User user) {
-        this.userDAO.addUser(user);
+    public void register(com.mediabox.findpro.data.User user) {
+        this.userDao.addUser(user);
     }
 }

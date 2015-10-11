@@ -1,6 +1,6 @@
 package com.mediabox.findpro.data;
 
-// Generated 2015-9-21 15:03:26 by Hibernate Tools 4.3.1
+// Generated 2015-10-11 14:23:06 by Hibernate Tools 4.3.1
 
 import java.util.HashSet;
 import java.util.Set;
@@ -23,14 +23,26 @@ public class User implements java.io.Serializable {
 	private Integer userid;
 	private String password;
 	private String username;
+	private Boolean enabled;
+	private String firstname;
+	private String lastname;
+	private String email;
+	private Set<UserRole> userRoles = new HashSet<UserRole>(0);
 	private Set<Contact> contacts = new HashSet<Contact>(0);
 
 	public User() {
 	}
 
-	public User(String password, String username, Set<Contact> contacts) {
+	public User(String password, String username, Boolean enabled,
+			String firstname, String lastname, String email,
+			Set<UserRole> userRoles, Set<Contact> contacts) {
 		this.password = password;
 		this.username = username;
+		this.enabled = enabled;
+		this.firstname = firstname;
+		this.lastname = lastname;
+		this.email = email;
+		this.userRoles = userRoles;
 		this.contacts = contacts;
 	}
 
@@ -61,6 +73,51 @@ public class User implements java.io.Serializable {
 
 	public void setUsername(String username) {
 		this.username = username;
+	}
+
+	@Column(name = "enabled")
+	public Boolean getEnabled() {
+		return this.enabled;
+	}
+
+	public void setEnabled(Boolean enabled) {
+		this.enabled = enabled;
+	}
+
+	@Column(name = "firstname", length = 45)
+	public String getFirstname() {
+		return this.firstname;
+	}
+
+	public void setFirstname(String firstname) {
+		this.firstname = firstname;
+	}
+
+	@Column(name = "lastname", length = 45)
+	public String getLastname() {
+		return this.lastname;
+	}
+
+	public void setLastname(String lastname) {
+		this.lastname = lastname;
+	}
+
+	@Column(name = "email", length = 45)
+	public String getEmail() {
+		return this.email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+	public Set<UserRole> getUserRoles() {
+		return this.userRoles;
+	}
+
+	public void setUserRoles(Set<UserRole> userRoles) {
+		this.userRoles = userRoles;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")

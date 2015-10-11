@@ -10,11 +10,23 @@ import lombok.Setter;
 @Setter
 public class RegisterForm {
 	
-	@NotNull
 	@Size(min=2, max=30)
 	private String username;
 	
 	@NotNull
 	@Size(min=2, max=30)
+	private String email;
+	
+	
+	@NotNull
+	@Size(min=2, max=30)
 	private String password;
+	
+	@NotNull
+	@Size(min=2, max=30)
+	private String firstname;
+	
+	@NotNull
+	@Size(min=2, max=30)
+	private String lastname;
 }
