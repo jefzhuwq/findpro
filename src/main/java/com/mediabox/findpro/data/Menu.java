@@ -1,9 +1,11 @@
 package com.mediabox.findpro.data;
 
-// Generated 2015-10-10 13:44:56 by Hibernate Tools 4.3.1
+// Generated 2015-10-13 14:14:06 by Hibernate Tools 4.3.1
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -14,35 +16,33 @@ import javax.persistence.Table;
 @Table(name = "menu", catalog = "findpro")
 public class Menu implements java.io.Serializable {
 
-	private int idmenu;
+	private Integer idmenu;
 	private String name;
 	private String description;
 	private Integer parentMenu;
 	private String imageUrl;
+	private Integer categoryId;
 
 	public Menu() {
 	}
 
-	public Menu(int idmenu) {
-		this.idmenu = idmenu;
-	}
-
-	public Menu(int idmenu, String name, String description,
-			Integer parentMenu, String imageUrl) {
-		this.idmenu = idmenu;
+	public Menu(String name, String description, Integer parentMenu,
+			String imageUrl, Integer categoryId) {
 		this.name = name;
 		this.description = description;
 		this.parentMenu = parentMenu;
 		this.imageUrl = imageUrl;
+		this.categoryId = categoryId;
 	}
 
 	@Id
+	@GeneratedValue(strategy = IDENTITY)
 	@Column(name = "idmenu", unique = true, nullable = false)
-	public int getIdmenu() {
+	public Integer getIdmenu() {
 		return this.idmenu;
 	}
 
-	public void setIdmenu(int idmenu) {
+	public void setIdmenu(Integer idmenu) {
 		this.idmenu = idmenu;
 	}
 
@@ -73,13 +73,22 @@ public class Menu implements java.io.Serializable {
 		this.parentMenu = parentMenu;
 	}
 
-	@Column(name = "image_url", length = 45)
+	@Column(name = "image_url", length = 200)
 	public String getImageUrl() {
 		return this.imageUrl;
 	}
 
 	public void setImageUrl(String imageUrl) {
 		this.imageUrl = imageUrl;
+	}
+
+	@Column(name = "category_id")
+	public Integer getCategoryId() {
+		return this.categoryId;
+	}
+
+	public void setCategoryId(Integer categoryId) {
+		this.categoryId = categoryId;
 	}
 
 }

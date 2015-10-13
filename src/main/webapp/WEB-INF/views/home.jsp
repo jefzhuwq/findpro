@@ -63,6 +63,7 @@
        <span class="sr-only">Next</span>
      </a>
    </div><!-- /.carousel -->
+   <c:out value="${sessionScope.name}"/>
 </div>
 <jsp:include page="footer.jsp"></jsp:include>
 

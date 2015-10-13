@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,15 +24,18 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.mediabox.findpro.form.LoginForm;
-import com.mediabox.findpro.service.MyUserDetailsService;
+import com.mediabox.findpro.service.AccountService;
 
 @Controller
+@SessionAttributes("sessionId")
 public class LoginController extends BasicController {
 	private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
-//	private MyUserDetailsService userService;
+	private AccountService accountService;
+	//	private MyUserDetailsService userService;
 	
 //	@Autowired(required = true)
 //	@Qualifier(value = "userDetailsService")
@@ -39,28 +43,34 @@ public class LoginController extends BasicController {
 //		this.userService = userService;
 //	}
 	
-//	@RequestMapping(value = "login", method = RequestMethod.POST)
-//    public ModelAndView loginPost(Model model, @ModelAttribute(LOGIN_FORM) LoginForm loginForm) {
-//        
-//		String sessionID = null;
-//		try {
-			//sessionID = userService.login(loginForm.getUsername(), loginForm.getPassword(), false);
-//		} catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//		if (sessionID != null && sessionID != "") {
-//	        ModelAndView mav = new ModelAndView("/menu");
-//	        mav.addObject("sessionID", sessionID);
-//	        return mav;
-//        } else {
-//        	ModelAndView mav = new ModelAndView("/login");
-//        	List<String> errorList = new ArrayList<>();
-//        	errorList.add("Something bad happen");
-//        	mav.addObject("error", errorList);
-//        	return mav;
-//        }
-//    }
+	@Autowired(required = true)
+	@Qualifier(value = "accountService")
+	public void setAccountService(AccountService accountService) {
+		this.accountService = accountService;
+	}
+	
+	@RequestMapping(value = "login", method = RequestMethod.POST)
+    public ModelAndView loginPost(Model model, @ModelAttribute(LOGIN_FORM) LoginForm loginForm) {
+        
+		String sessionId = null;
+		try {
+			sessionId = accountService.login(loginForm.getUsername(), loginForm.getPassword(), false);
+		} catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		if (sessionId != null && sessionId != "") {
+	        ModelAndView mav = new ModelAndView("/menu");
+	        mav.addObject("sessionId", sessionId);
+	        return mav;
+        } else {
+        	ModelAndView mav = new ModelAndView("/login");
+        	List<String> errorList = new ArrayList<>();
+        	errorList.add("Something bad happen");
+        	mav.addObject("error", errorList);
+        	return mav;
+        }
+    }
 	
 	@RequestMapping(value = "login", method = RequestMethod.GET)
 	public ModelAndView login(@RequestParam(value = "error", required = false) String error,
@@ -75,7 +85,7 @@ public class LoginController extends BasicController {
 			model.addObject("msg", "You've been logged out successfully.");
 		}
 		model.setViewName("login");
-
+		request.getSession().removeAttribute("sessionId");;
 		return model;
 
 	}
@@ -117,15 +127,6 @@ public class LoginController extends BasicController {
 		model.addObject("message", "This page is for ROLE_ADMIN only!");
 		model.setViewName("admin");
 		return "account";
-	}
-	
-	@RequestMapping(value = "menu", method = RequestMethod.GET)
-	public String menuGet() {
-		ModelAndView model = new ModelAndView();
-		model.addObject("title", "Spring Security Login Form - Database Authentication");
-		model.addObject("message", "This page is for ROLE_ADMIN only!");
-		model.setViewName("admin");
-		return "menu";
 	}
 	
 	@RequestMapping(value = "cart", method = RequestMethod.GET)

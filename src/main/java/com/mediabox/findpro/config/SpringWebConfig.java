@@ -20,6 +20,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 
+import com.mediabox.findpro.dao.CategoryDao;
+import com.mediabox.findpro.dao.MenuDao;
 import com.mediabox.findpro.dao.UserHome;
 
 @EnableWebMvc
@@ -81,6 +83,19 @@ public class SpringWebConfig extends WebMvcConfigurerAdapter {
 	public UserHome getUserDao(SessionFactory sessionFactory) {
 	    return new UserHome(sessionFactory);
 	}
+	
+	@Autowired
+	@Bean(name = "menuDao")
+	public MenuDao getMenuDao(SessionFactory sessionFactory) {
+	    return new MenuDao(sessionFactory);
+	}
+	
+	@Autowired
+	@Bean(name = "categoryDao")
+	public CategoryDao getCategoryDao(SessionFactory sessionFactory) {
+	    return new CategoryDao(sessionFactory);
+	}
+	
 	
 	private Properties getHibernateProperties() {
 		Properties properties = new Properties();

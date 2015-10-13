@@ -1,3 +1,5 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page session="true" %>
 <nav class="navbar navbar-default navbar-fixed-top">
   <div class="container-fluid">
 	<div class="navbar-header">
@@ -11,7 +13,15 @@
 	</div>
 	<div id="navbar" class="navbar-collapse collapse">
 	  <ul class="nav navbar-nav navbar-right">
-		<li><a href="login">Sign in</a></li>
+		<c:choose>
+		    <c:when test="${sessionId!=null}">
+		        <li><a href="account">My Account</a></li>
+		    	<li><a href="logout">Log out</a></li>
+		    </c:when>
+		    <c:otherwise>
+		        <li><a href="login">Sign in</a></li>
+		    </c:otherwise>
+		</c:choose>
 		<li><a href="cart">My Cart</a></li>
 	  </ul>
 	  <!--

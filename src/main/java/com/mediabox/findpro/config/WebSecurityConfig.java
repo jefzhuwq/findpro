@@ -38,6 +38,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
+		// comment following since this doesn't work 
+		/*
 		http.authorizeRequests().antMatchers("/admin/**")
 		.access("hasRole('ROLE_ADMIN')").and().formLogin()
 		.loginPage("/login").failureUrl("/login?error")
@@ -46,6 +48,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			.and().logout().logoutSuccessUrl("/login?logout")
 			.and().csrf()
 			.and().exceptionHandling().accessDeniedPage("/403");
+		*/
 	}
 	
 //	@Bean
