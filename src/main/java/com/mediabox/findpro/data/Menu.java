@@ -1,7 +1,8 @@
 package com.mediabox.findpro.data;
 
-// Generated 2015-10-13 14:14:06 by Hibernate Tools 4.3.1
+// Generated 2015-10-15 15:53:58 by Hibernate Tools 4.3.1
 
+import java.math.BigDecimal;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -22,17 +23,19 @@ public class Menu implements java.io.Serializable {
 	private Integer parentMenu;
 	private String imageUrl;
 	private Integer categoryId;
+	private BigDecimal unitPrice;
 
 	public Menu() {
 	}
 
 	public Menu(String name, String description, Integer parentMenu,
-			String imageUrl, Integer categoryId) {
+			String imageUrl, Integer categoryId, BigDecimal unitPrice) {
 		this.name = name;
 		this.description = description;
 		this.parentMenu = parentMenu;
 		this.imageUrl = imageUrl;
 		this.categoryId = categoryId;
+		this.unitPrice = unitPrice;
 	}
 
 	@Id
@@ -89,6 +92,15 @@ public class Menu implements java.io.Serializable {
 
 	public void setCategoryId(Integer categoryId) {
 		this.categoryId = categoryId;
+	}
+
+	@Column(name = "unit_price", precision = 5)
+	public BigDecimal getUnitPrice() {
+		return this.unitPrice;
+	}
+
+	public void setUnitPrice(BigDecimal unitPrice) {
+		this.unitPrice = unitPrice;
 	}
 
 }

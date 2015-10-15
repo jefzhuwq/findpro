@@ -18,4 +18,9 @@ public class MenuService {
 	public List<Menu> getMenuByCategoryId(int categoryId) {
 		return this.menuDao.getMenuByCategoryId(categoryId);
 	}
+	
+	@Transactional
+	public Menu getMenuById(int menuId) {
+		return this.menuDao.getMenuById(menuId);
+	}
 }

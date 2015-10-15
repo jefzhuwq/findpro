@@ -1,4 +1,4 @@
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
@@ -30,24 +30,14 @@ Subtotal: $123.58
 			</tr>
 		  </thead>
 		  <tbody>
+		    <c:forEach var="cart" items="${cartList}">
 			<tr>
-			  <td><img src="" class="img-responsive" style="width: 130px; height: 140px;"></td>
-			  <td>Description</td>
-			  <td>$13.56</td>
-			  <td>1</td>
+			  <td><img src="${cart.key.getImageUrl()}" class="img-responsive" style="width: 130px; height: 140px;"></td>
+			  <td>${cart.key.getName()}</td>
+			  <td>${cart.key.getUnitPrice()}</td>
+			  <td>${cart.value}</td>
 			</tr>
-			<tr>
-			  <td><img src="" class="img-responsive" style="width: 130px; height: 140px;"></td>
-			  <td>Description</td>
-			  <td>$56.25</td>
-			  <td>2</td>
-			</tr>
-			<tr>
-			  <td><img src="" class="img-responsive" style="width: 130px; height: 140px;"></td>
-			  <td>Description</td>
-			  <td>$56.25</td>
-			  <td>2</td>
-			</tr>
+			</c:forEach>
 		  </tbody>
 		</table>
 	  </div>

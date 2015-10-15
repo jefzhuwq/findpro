@@ -129,15 +129,6 @@ public class LoginController extends BasicController {
 		return "account";
 	}
 	
-	@RequestMapping(value = "cart", method = RequestMethod.GET)
-	public String cartGet() {
-		ModelAndView model = new ModelAndView();
-		model.addObject("title", "Spring Security Login Form - Database Authentication");
-		model.addObject("message", "This page is for ROLE_ADMIN only!");
-		model.setViewName("admin");
-		return "cart";
-	}
-	
 	@RequestMapping(value = "/admin**", method = RequestMethod.GET)
 	public ModelAndView adminPage() {
 

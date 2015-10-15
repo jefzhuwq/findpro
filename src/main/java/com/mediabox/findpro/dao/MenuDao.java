@@ -10,6 +10,7 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.mediabox.findpro.data.Category;
 import com.mediabox.findpro.data.Menu;
 
 @Repository("menuDao")
@@ -30,5 +31,11 @@ public class MenuDao {
 		Session session = this.sessionFactory.getCurrentSession();
 		List<Menu> menuList = session.createCriteria(Menu.class).add(Restrictions.eq("categoryId", categoryId)).list();
 		return menuList;
+	}
+	
+	public Menu getMenuById(int id) {
+		Session session = this.sessionFactory.getCurrentSession();
+		Menu menu = (Menu)session.createCriteria(Menu.class).add(Restrictions.eq("idmenu", id)).uniqueResult();
+		return menu;
 	}
 }
