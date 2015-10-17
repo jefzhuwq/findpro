@@ -1,6 +1,6 @@
 package com.mediabox.findpro.data;
 
-// Generated 2015-10-10 13:44:56 by Hibernate Tools 4.3.1
+// Generated 2015-10-17 15:02:10 by Hibernate Tools 4.3.1
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,7 +16,7 @@ public class AddressBook implements java.io.Serializable {
 
 	private int idaddressBook;
 	private String address;
-	private String userId;
+	private Integer userId;
 	private Boolean isPrimary;
 	private Boolean isBilling;
 
@@ -27,7 +27,7 @@ public class AddressBook implements java.io.Serializable {
 		this.idaddressBook = idaddressBook;
 	}
 
-	public AddressBook(int idaddressBook, String address, String userId,
+	public AddressBook(int idaddressBook, String address, Integer userId,
 			Boolean isPrimary, Boolean isBilling) {
 		this.idaddressBook = idaddressBook;
 		this.address = address;
@@ -55,12 +55,12 @@ public class AddressBook implements java.io.Serializable {
 		this.address = address;
 	}
 
-	@Column(name = "user_id", length = 45)
-	public String getUserId() {
+	@Column(name = "user_id")
+	public Integer getUserId() {
 		return this.userId;
 	}
 
-	public void setUserId(String userId) {
+	public void setUserId(Integer userId) {
 		this.userId = userId;
 	}
 

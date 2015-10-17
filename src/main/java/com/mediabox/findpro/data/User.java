@@ -1,6 +1,6 @@
 package com.mediabox.findpro.data;
 
-// Generated 2015-10-11 14:23:06 by Hibernate Tools 4.3.1
+// Generated 2015-10-17 14:34:02 by Hibernate Tools 4.3.1
 
 import java.util.HashSet;
 import java.util.Set;
@@ -27,6 +27,7 @@ public class User implements java.io.Serializable {
 	private String firstname;
 	private String lastname;
 	private String email;
+	private String sessionid;
 	private Set<UserRole> userRoles = new HashSet<UserRole>(0);
 	private Set<Contact> contacts = new HashSet<Contact>(0);
 
@@ -34,7 +35,7 @@ public class User implements java.io.Serializable {
 	}
 
 	public User(String password, String username, Boolean enabled,
-			String firstname, String lastname, String email,
+			String firstname, String lastname, String email, String sessionid,
 			Set<UserRole> userRoles, Set<Contact> contacts) {
 		this.password = password;
 		this.username = username;
@@ -42,6 +43,7 @@ public class User implements java.io.Serializable {
 		this.firstname = firstname;
 		this.lastname = lastname;
 		this.email = email;
+		this.sessionid = sessionid;
 		this.userRoles = userRoles;
 		this.contacts = contacts;
 	}
@@ -109,6 +111,15 @@ public class User implements java.io.Serializable {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	@Column(name = "sessionid", length = 45)
+	public String getSessionid() {
+		return this.sessionid;
+	}
+
+	public void setSessionid(String sessionid) {
+		this.sessionid = sessionid;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")

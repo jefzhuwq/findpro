@@ -23,4 +23,9 @@ public class AccountService {
     public void register(com.mediabox.findpro.data.User user) {
         this.userDao.addUser(user);
     }
+	
+	@Transactional
+    public com.mediabox.findpro.data.User getUserBySessionId(String sessionId) {
+        return this.userDao.findBySessionId(sessionId);
+    }
 }

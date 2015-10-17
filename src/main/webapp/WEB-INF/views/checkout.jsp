@@ -1,4 +1,5 @@
-
+<%@ include file="common.inc" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
@@ -31,9 +32,15 @@
 			<tr>
 			  <td>1</td>
 			  <td>Shipping Address</td>
-			  <td>Wenqing Zhu
-					7115 NE 159TH ST
-					KENMORE, WA 98028-4251
+			  <td>
+			   <c:choose>
+				    <c:when test="${address!=null}">
+				       <c:out value="${address.getAddress()}"></c:out>
+				    </c:when>
+				    <c:otherwise>
+				       No Address
+				    </c:otherwise>
+				</c:choose>
 			  </td>
 			  <td><a href="#" class="btn btn-primary" role="button">change</a></td>
 			</tr>

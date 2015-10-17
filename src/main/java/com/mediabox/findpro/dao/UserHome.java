@@ -154,6 +154,18 @@ public class UserHome {
 		return userList;
 	}
 	
+	public User findBySessionId(String sessionId) {
+		log.debug("getting User instance with sessionId: " + sessionId);
+		List<User> users = new ArrayList<>();
+		Session session = this.sessionFactory.getCurrentSession();
+		users = session.createCriteria(User.class).add(Restrictions.eq("sessionid", sessionId)).list();
+		if (users.size() > 0) {
+			return users.get(0);
+		} else {
+			return null;
+		}
+	}
+	
 	public String login(String userName, String password, boolean isEncrypted) throws NoSuchAlgorithmException, UnsupportedEncodingException {
 		Session session = this.sessionFactory.getCurrentSession();
 		if (!isEncrypted) {
@@ -169,6 +181,8 @@ public class UserHome {
 		User user = (User)session.createCriteria(User.class).add(Restrictions.eq("username", userName)).add(Restrictions.eq("password", password)).uniqueResult();
 		if (user != null) {
 			String sessionID = UUID.randomUUID().toString();
+			user.setSessionid(sessionID);
+			session.save(user);
 			return sessionID;
 		} else {
 			return null;

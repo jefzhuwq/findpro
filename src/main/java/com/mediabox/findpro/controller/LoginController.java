@@ -161,13 +161,4 @@ public class LoginController extends BasicController {
 			return model;
 
 		}
-	
-	@RequestMapping(value = "checkout", method = RequestMethod.GET)
-	public String checkoutGet() {
-		ModelAndView model = new ModelAndView();
-		model.addObject("title", "Spring Security Login Form - Database Authentication");
-		model.addObject("message", "This page is for ROLE_ADMIN only!");
-		model.setViewName("admin");
-		return "checkout";
-	}
 }
