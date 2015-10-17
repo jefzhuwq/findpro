@@ -28,6 +28,7 @@ public class MenuController extends BasicController {
 	private static final Logger logger = LoggerFactory.getLogger(MenuController.class);
 	private MenuService menuService;
 	private CategoryService categoryService;
+	private static final int MAX_COUNT = 9;
 	
 	@Autowired(required = true)
 	@Qualifier(value = "menuService")
@@ -68,8 +69,12 @@ public class MenuController extends BasicController {
 			}
 			if (cart.containsKey(menuId)) {
 				int count = cart.get(menuId);
-				count++;
-				cart.put(menuId, count);
+				if (count < MAX_COUNT) {
+					count++;
+					cart.put(menuId, count);
+				} else {
+					return;
+				}
 			} else {
 				cart.put(menuId, 1);
 			}

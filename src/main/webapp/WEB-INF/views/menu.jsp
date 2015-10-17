@@ -43,7 +43,6 @@
 	  <h1 class="page-header"><c:out value="${selectedcategory.getCategoryName()}"></c:out></h1>
 
 	  <div class="row placeholders">
-		
 		<c:forEach var="menu" items="${menus}">
 			<div class="col-xs-6 col-sm-3 placeholder">
 			  <img src="${menu.getImageUrl()}" class="img-responsive" >
