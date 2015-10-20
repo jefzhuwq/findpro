@@ -49,10 +49,10 @@ public class CheckoutController extends BasicController {
 				mav.addObject("address", address);
 				mav.setViewName("checkout");
 			} else {
-				mav.setViewName("redirect:login?checkout");
+				mav.setViewName("redirect:login?redirect=checkout");
 			}
 		} else {
-			mav.setViewName("redirect:login?checkout");
+			mav.setViewName("redirect:login?redirect=checkout");
 		}
 		return mav;
 	}

@@ -3,10 +3,12 @@ package com.mediabox.findpro.controller;
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,6 +29,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.common.collect.Lists;
 import com.mediabox.findpro.form.LoginForm;
 import com.mediabox.findpro.service.AccountService;
 
@@ -35,6 +38,7 @@ import com.mediabox.findpro.service.AccountService;
 public class LoginController extends BasicController {
 	private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
 	private AccountService accountService;
+	private List<String> redirectList = Arrays.asList(new String[] {"checkout"});
 	//	private MyUserDetailsService userService;
 	
 //	@Autowired(required = true)
@@ -50,7 +54,7 @@ public class LoginController extends BasicController {
 	}
 	
 	@RequestMapping(value = "login", method = RequestMethod.POST)
-    public ModelAndView loginPost(Model model, @ModelAttribute(LOGIN_FORM) LoginForm loginForm) {
+    public ModelAndView loginPost(Model model, @ModelAttribute(LOGIN_FORM) LoginForm loginForm, @RequestParam(value = "redirect", required = false) String redirect) {
         
 		String sessionId = null;
 		try {
@@ -60,7 +64,12 @@ public class LoginController extends BasicController {
 			e.printStackTrace();
 		}
 		if (sessionId != null && sessionId != "") {
-	        ModelAndView mav = new ModelAndView("/menu");
+			ModelAndView mav;
+			if (redirectList.contains(redirect)) {
+				mav = new ModelAndView(redirect);
+			} else {
+				mav = new ModelAndView("/menu");
+			}
 	        mav.addObject("sessionId", sessionId);
 	        return mav;
         } else {

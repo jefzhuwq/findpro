@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.mediabox.findpro.form.LoginForm;
@@ -51,7 +52,7 @@ public class MenuController extends BasicController {
     }
 	
 	@RequestMapping(value = "addToCart", method = RequestMethod.GET)
-    public String addToCartGet(@RequestParam(value = "menuId", required = true) String menuId, HttpServletRequest request) {
+    public @ResponseBody String addToCartGet(@RequestParam(value = "menuId", required = true) String menuId, HttpServletRequest request) {
 		if (!StringUtils.isEmpty(menuId)) {
 			this.addToCart(request, Integer.parseInt(menuId));
 			return "0";

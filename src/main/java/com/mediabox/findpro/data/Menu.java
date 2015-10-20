@@ -1,6 +1,6 @@
 package com.mediabox.findpro.data;
 
-// Generated 2015-10-15 15:53:58 by Hibernate Tools 4.3.1
+// Generated 2015-10-20 13:56:29 by Hibernate Tools 4.3.1
 
 import java.math.BigDecimal;
 import javax.persistence.Column;
@@ -94,7 +94,7 @@ public class Menu implements java.io.Serializable {
 		this.categoryId = categoryId;
 	}
 
-	@Column(name = "unit_price", precision = 5)
+	@Column(name = "unit_price", precision = 15)
 	public BigDecimal getUnitPrice() {
 		return this.unitPrice;
 	}

@@ -11,8 +11,8 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
-import org.springframework.orm.hibernate4.HibernateTransactionManager;
-import org.springframework.orm.hibernate4.LocalSessionFactoryBuilder;
+import org.springframework.orm.hibernate5.HibernateTransactionManager;
+import org.springframework.orm.hibernate5.LocalSessionFactoryBuilder;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -23,6 +23,7 @@ import org.springframework.web.servlet.view.JstlView;
 import com.mediabox.findpro.dao.AddressDao;
 import com.mediabox.findpro.dao.CategoryDao;
 import com.mediabox.findpro.dao.MenuDao;
+import com.mediabox.findpro.dao.OrderDao;
 import com.mediabox.findpro.dao.UserHome;
 
 @EnableWebMvc
@@ -95,6 +96,12 @@ public class SpringWebConfig extends WebMvcConfigurerAdapter {
 	@Bean(name = "addressDao")
 	public AddressDao getAddressDao(SessionFactory sessionFactory) {
 	    return new AddressDao(sessionFactory);
+	}
+	
+	@Autowired
+	@Bean(name = "orderDao")
+	public OrderDao getOrderDao(SessionFactory sessionFactory) {
+	    return new OrderDao(sessionFactory);
 	}
 	
 	@Autowired

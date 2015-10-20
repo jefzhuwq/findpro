@@ -113,8 +113,12 @@ $(document).ready(function() {
 		 if($(this).prop("id").indexOf("btnAddCart_") == 0) {
 			 var url = 'addToCart?menuId=' + menuId;
 			 $.get(url, function( data ) {
-				 alert(data);
-				});
+				 if (data=="0") {
+					 $('#myModal').modal('show');
+				 } else {
+					alert("Failed to add to cart, please try again");
+				 }
+			});
  		 }
 	 });
 	});

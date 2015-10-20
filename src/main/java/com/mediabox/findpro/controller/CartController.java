@@ -1,5 +1,6 @@
 package com.mediabox.findpro.controller;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -42,19 +43,11 @@ public class CartController extends BasicController {
 	@RequestMapping(value = "cart", method = RequestMethod.GET)
 	public ModelAndView cartGet(HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
-		Map<Menu, Integer> cartList = this.getItemListFromCart(request);
-		mav.addObject("cartList", cartList);
-		mav.addObject("countMap", this.getCountMap());
+		Map<Menu, Integer> cartItemList = this.getItemListFromCart(request);
+		mav.addObject("cartItemList", cartItemList);
+		mav.addObject("total", this.calculateTotal(cartItemList));
 		mav.setViewName("cart");
 		return mav;
-	}
-	
-	private Map<Integer, Integer> getCountMap() {
-		Map<Integer, Integer> countMap = new HashMap<>();
-		for (int i=1;i<10;i++) {
-			countMap.put(i, i);
-		}
-		return countMap;
 	}
 	
 	@RequestMapping(value = "updateCart", method = RequestMethod.POST)
@@ -68,8 +61,9 @@ public class CartController extends BasicController {
 			int count = cartForm.getCount();
 			this.updateItemListInCart(request, menuId, count);
 		}
-		Map<Menu, Integer> cartList = this.getItemListFromCart(request);
-		mav.addObject("cartList", cartList);
+		Map<Menu, Integer> cartItemList = this.getItemListFromCart(request);
+		mav.addObject("cartItemList", cartItemList);
+		mav.addObject("total", this.calculateTotal(cartItemList));
 		mav.setViewName("redirect:cart");
 		return mav;
 	}
@@ -90,16 +84,26 @@ public class CartController extends BasicController {
 	}
 	
 	public Map<Menu, Integer> getItemListFromCart(HttpServletRequest request) {
-		Map<Menu, Integer> cartList = new HashMap<>();
+		Map<Menu, Integer> cartItemList = new HashMap<>();
 		HttpSession session = request.getSession();
 		if (session != null && session.getAttribute("cart") != null) {
 			Map<Integer, Integer> cart = (Map<Integer, Integer>)session.getAttribute("cart");
 			if (cart != null) {
 				for (int menuId : cart.keySet()) {
-					cartList.put(this.menuService.getMenuById(menuId), cart.get(menuId));
+					cartItemList.put(this.menuService.getMenuById(menuId), cart.get(menuId));
 				}
 			}
 		}
-		return cartList;
+		return cartItemList;
+	}
+	
+	public double calculateTotal(Map<Menu, Integer> cartItemList) {
+		BigDecimal sum = new BigDecimal(0);
+		if (cartItemList != null) {
+			for (Map.Entry<Menu, Integer> cartItem : cartItemList.entrySet()) {
+				sum = sum.add(cartItem.getKey().getUnitPrice().multiply(new BigDecimal(cartItem.getValue())));
+			}
+		}
+		return sum.doubleValue();
 	}
 }
