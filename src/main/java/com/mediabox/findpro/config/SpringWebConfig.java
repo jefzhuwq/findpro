@@ -24,6 +24,7 @@ import com.mediabox.findpro.dao.AddressDao;
 import com.mediabox.findpro.dao.CategoryDao;
 import com.mediabox.findpro.dao.MenuDao;
 import com.mediabox.findpro.dao.OrderDao;
+import com.mediabox.findpro.dao.PaymentDao;
 import com.mediabox.findpro.dao.UserHome;
 
 @EnableWebMvc
@@ -110,6 +111,11 @@ public class SpringWebConfig extends WebMvcConfigurerAdapter {
 	    return new CategoryDao(sessionFactory);
 	}
 	
+	@Autowired
+	@Bean(name = "paymentDao")
+	public PaymentDao getPaymentDao(SessionFactory sessionFactory) {
+	    return new PaymentDao(sessionFactory);
+	}
 	
 	private Properties getHibernateProperties() {
 		Properties properties = new Properties();

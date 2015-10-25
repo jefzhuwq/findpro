@@ -1,5 +1,7 @@
 package com.mediabox.findpro.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -13,15 +15,18 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.mediabox.findpro.data.AddressBook;
+import com.mediabox.findpro.data.Payment;
 import com.mediabox.findpro.data.User;
 import com.mediabox.findpro.service.AccountService;
 import com.mediabox.findpro.service.AddressService;
+import com.mediabox.findpro.service.PaymentService;
 
 @Controller
 public class CheckoutController extends BasicController {
 	private static final Logger logger = LoggerFactory.getLogger(CheckoutController.class);
 	private AccountService accountService;
 	private AddressService addressService;
+	private PaymentService paymentService;
 	
 	@Autowired(required = true)
 	@Qualifier(value = "accountService")
@@ -35,6 +40,12 @@ public class CheckoutController extends BasicController {
 		this.addressService = addressService;
 	}
 	
+	@Autowired(required = true)
+	@Qualifier(value = "paymentService")
+	public void setPaymentService(PaymentService paymentService) {
+		this.paymentService = paymentService;
+	}
+	
 	@RequestMapping(value = "checkout", method = RequestMethod.GET)
 	public ModelAndView checkoutGet(HttpServletRequest request) {
 		HttpSession session = request.getSession();
@@ -45,8 +56,16 @@ public class CheckoutController extends BasicController {
 			if (user!=null) {
 				// get address info
 				AddressBook address = this.addressService.getUserDefaultAddress(user.getUserid());
-				// get payment info
 				mav.addObject("address", address);
+				// get payment info
+				Payment payment = this.paymentService.getUserDefaultPayment(user.getUserid());
+				mav.addObject("payment", payment);
+				// get address list
+				List<AddressBook> addressList = this.addressService.getAddressByUserId(user.getUserid());
+				mav.addObject("addressList", addressList);
+				// get payment list
+				List<Payment> paymentList = this.paymentService.getPaymentByUserId(user.getUserid());
+				mav.addObject("paymentList", paymentList);
 				mav.setViewName("checkout");
 			} else {
 				mav.setViewName("redirect:login?redirect=checkout");

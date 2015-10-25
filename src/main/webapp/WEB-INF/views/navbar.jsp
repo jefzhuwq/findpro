@@ -16,7 +16,7 @@
 		<c:choose>
 		    <c:when test="${sessionId!=null}">
 		        <li><a href="account">My Account</a></li>
-		    	<li><a href="logout">Log out</a></li>
+		    	<li><a href="login?logout">Log out</a></li>
 		    </c:when>
 		    <c:otherwise>
 		        <li><a href="login">Sign in</a></li>

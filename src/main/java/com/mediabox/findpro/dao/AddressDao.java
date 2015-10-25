@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.mediabox.findpro.data.AddressBook;
-import com.mediabox.findpro.data.Menu;
 
 @Repository("addressDao")
 public class AddressDao {
@@ -33,15 +32,37 @@ public class AddressDao {
 		return addressList;
 	}
 	
+	public AddressBook getAddressByIdAndUserId(int id, int userId) {
+		Session session = this.sessionFactory.getCurrentSession();
+		AddressBook address = (AddressBook)session.createCriteria(AddressBook.class).add(Restrictions.eq("idaddressBook", id)).add(Restrictions.eq("userId", userId)).uniqueResult();
+		return address;
+	}
+	
+	public AddressBook getAddressById(int id) {
+		Session session = this.sessionFactory.getCurrentSession();
+		AddressBook address = (AddressBook)session.createCriteria(AddressBook.class).add(Restrictions.eq("idaddressBook", id)).uniqueResult();
+		return address;
+	}
+	
 	public AddressBook getDefaultAddress(int userId) {
 		Session session = this.sessionFactory.getCurrentSession();
 		AddressBook address = (AddressBook)session.createCriteria(AddressBook.class).add(Restrictions.eq("userId", userId)).add(Restrictions.eq("isPrimary", true)).uniqueResult();
 		return address;
 	}
 	
-	public Menu getMenuById(int id) {
+	public boolean deleteAddress(int id) {
 		Session session = this.sessionFactory.getCurrentSession();
-		Menu menu = (Menu)session.createCriteria(Menu.class).add(Restrictions.eq("idmenu", id)).uniqueResult();
-		return menu;
+		AddressBook address = this.getAddressById(id);
+		session.delete(address);
+		return true;
+	}
+	
+	public void persist(AddressBook instance) {
+		try {
+			sessionFactory.getCurrentSession().saveOrUpdate(instance);
+		} catch (RuntimeException re) {
+			log.error("persist failed", re);
+			throw re;
+		}
 	}
 }

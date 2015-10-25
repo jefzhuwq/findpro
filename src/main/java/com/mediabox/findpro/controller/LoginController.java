@@ -38,7 +38,7 @@ import com.mediabox.findpro.service.AccountService;
 public class LoginController extends BasicController {
 	private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
 	private AccountService accountService;
-	private List<String> redirectList = Arrays.asList(new String[] {"checkout"});
+	private List<String> redirectList = Arrays.asList(new String[] {"checkout", "address"});
 	//	private MyUserDetailsService userService;
 	
 //	@Autowired(required = true)
@@ -55,7 +55,6 @@ public class LoginController extends BasicController {
 	
 	@RequestMapping(value = "login", method = RequestMethod.POST)
     public ModelAndView loginPost(Model model, @ModelAttribute(LOGIN_FORM) LoginForm loginForm, @RequestParam(value = "redirect", required = false) String redirect) {
-        
 		String sessionId = null;
 		try {
 			sessionId = accountService.login(loginForm.getUsername(), loginForm.getPassword(), false);
@@ -64,11 +63,11 @@ public class LoginController extends BasicController {
 			e.printStackTrace();
 		}
 		if (sessionId != null && sessionId != "") {
-			ModelAndView mav;
+			ModelAndView mav = new ModelAndView();
 			if (redirectList.contains(redirect)) {
-				mav = new ModelAndView(redirect);
+				mav.setViewName("redirect:" + redirect);
 			} else {
-				mav = new ModelAndView("/menu");
+				mav.setViewName("/menu");
 			}
 	        mav.addObject("sessionId", sessionId);
 	        return mav;
