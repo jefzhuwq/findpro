@@ -25,14 +25,8 @@ import com.mediabox.findpro.service.MenuService;
 @Controller
 public class CartController extends BasicController {
 	private static final Logger logger = LoggerFactory.getLogger(CartController.class);
-	private MenuService menuService;
-	private CategoryService categoryService;
 	
-	@Autowired(required = true)
-	@Qualifier(value = "menuService")
-	public void setMenuService(MenuService menuService) {
-		this.menuService = menuService;
-	}
+	private CategoryService categoryService;
 	
 	@Autowired(required = true)
 	@Qualifier(value = "categoryService")
@@ -64,7 +58,7 @@ public class CartController extends BasicController {
 		Map<Menu, Integer> cartItemList = this.getItemListFromCart(request);
 		mav.addObject("cartItemList", cartItemList);
 		mav.addObject("total", this.calculateTotal(cartItemList));
-		mav.setViewName("redirect:cart");
+		mav.setViewName(this.getRedirect("cart"));
 		return mav;
 	}
 	
@@ -83,19 +77,7 @@ public class CartController extends BasicController {
 		}
 	}
 	
-	public Map<Menu, Integer> getItemListFromCart(HttpServletRequest request) {
-		Map<Menu, Integer> cartItemList = new HashMap<>();
-		HttpSession session = request.getSession();
-		if (session != null && session.getAttribute("cart") != null) {
-			Map<Integer, Integer> cart = (Map<Integer, Integer>)session.getAttribute("cart");
-			if (cart != null) {
-				for (int menuId : cart.keySet()) {
-					cartItemList.put(this.menuService.getMenuById(menuId), cart.get(menuId));
-				}
-			}
-		}
-		return cartItemList;
-	}
+	
 	
 	public double calculateTotal(Map<Menu, Integer> cartItemList) {
 		BigDecimal sum = new BigDecimal(0);

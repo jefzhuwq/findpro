@@ -6,7 +6,7 @@
 	<jsp:include page="../header.jsp"></jsp:include>
     <%@page import="com.mediabox.findpro.controller.AddressController"%>
     <%@page import="com.mediabox.findpro.form.AddressForm"%>
-    <c:set var="loginFormName"><%=AddressController.ADDRESS_FORM%></c:set>
+    <c:set var="addressFormName"><%=AddressController.ADDRESS_FORM%></c:set>
 </head>
 <body>
 

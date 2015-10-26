@@ -15,7 +15,10 @@
 <div class="container-fluid">
 <h1>Checkout</h1>
 <a href="cart" class="btn btn-primary" role="button">Back to cart</a>
+<c:if test="${cartItemList!=null && cartItemList.size()!=0}" >
 <a href="order" class="btn btn-primary" role="button">Place your order</a>
+<h3><b>Order Total: $<c:out value="${total}" /></b></h3>
+</c:if>
 </div>
 <div class="container-fluid">
 	<div class="jumbotron">
@@ -68,7 +71,22 @@
 			<tr>
 			  <td>3</td>
 			  <td>Review items</td>
-			  <td></td>
+			  <td>
+                <c:choose>
+                    <c:when test="${cartItemList!=null && cartItemList.size()!=0}">
+                       <c:forEach var="cartItem" items="${cartItemList}">
+                        <img src="${cartItem.key.getImageUrl()}" class="img-responsive" style="width: 130px; height: 140px;" />
+                        <c:out value="${cartItem.key.getName()}"></c:out>
+                        <c:out value="${cartItem.key.getUnitPrice()}"></c:out>
+                        <c:out value="${cartItem.value}"></c:out>
+                        <c:out value="${cartItem.key.getUnitPrice() * cartItem.value}"></c:out>
+                       </c:forEach>
+                    </c:when>
+                    <c:otherwise>
+                       No Item in your cart
+                    </c:otherwise>
+                </c:choose>
+              </td>
 			  <td></td>
 			</tr>
 		  </tbody>

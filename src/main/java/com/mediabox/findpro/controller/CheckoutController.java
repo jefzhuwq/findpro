@@ -1,6 +1,7 @@
 package com.mediabox.findpro.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.mediabox.findpro.data.AddressBook;
+import com.mediabox.findpro.data.Menu;
 import com.mediabox.findpro.data.Payment;
 import com.mediabox.findpro.data.User;
 import com.mediabox.findpro.service.AccountService;
@@ -50,6 +52,7 @@ public class CheckoutController extends BasicController {
 	public ModelAndView checkoutGet(HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		ModelAndView mav = new ModelAndView();
+		String viewNameLogin = this.getRedirect("login?redirect=checkout");
 		if (session != null && session.getAttribute("sessionId") != null) {
 			String sessionId = String.valueOf(session.getAttribute("sessionId"));
 			User user = this.accountService.getUserBySessionId(sessionId);
@@ -66,12 +69,17 @@ public class CheckoutController extends BasicController {
 				// get payment list
 				List<Payment> paymentList = this.paymentService.getPaymentByUserId(user.getUserid());
 				mav.addObject("paymentList", paymentList);
+				// get cart item list
+				Map<Menu, Integer> cartItemList = this.getItemListFromCart(request);
+				mav.addObject("cartItemList", cartItemList);
+				// get total
+				mav.addObject("total", this.calculateTotal(cartItemList));
 				mav.setViewName("checkout");
 			} else {
-				mav.setViewName("redirect:login?redirect=checkout");
+				mav.setViewName(viewNameLogin);
 			}
 		} else {
-			mav.setViewName("redirect:login?redirect=checkout");
+			mav.setViewName(viewNameLogin);
 		}
 		return mav;
 	}

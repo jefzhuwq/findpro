@@ -12,33 +12,29 @@
 <div class="container-fluid">
 <br><br><br>
 
-<a href="editAddress?id=" class="btn btn-primary btn-lg" role="button">Enter a new address</a>
+<a href="editPayment?id=" class="btn btn-primary btn-lg" role="button">Enter a new payment option</a>
 
-<h3>Primary Address</h3>
+<h3>Primary Payment</h3>
 <hr>
-<c:if test="${address!=null}">
-    <c:out value="${address.getFirstName()}" /> <c:out value="${address.getLastName()}" />
-	<c:out value="${address.getStreet()}" />
-    <c:out value="${address.getCity()}" /> <c:out value="${address.getState()}" /> <c:out value="${address.getZipcode()}" />
+<c:if test="${payment!=null}">
+    <c:out value="${payment.getPaymentType()}" />
     <p>
-	<a href="editAddress?id=${address.getIdaddressBook()}" class="btn btn-primary" role="button">Edit</a>
-	<a href="deleteAddress?id=${address.getIdaddressBook()}" class="btn btn-primary" role="button">Delete</a>	
+	<a href="editPayment?id=${payment.getIdpayment()}" class="btn btn-primary" role="button">Edit</a>
+	<a href="deletePayment?id=${payment.getIdpayment()}" class="btn btn-primary" role="button">Delete</a>	
 	</p>
 </c:if>
 
-<h3>Other Addresses</h3>
+<h3>Other Payment</h3>
 <hr>
 
-<c:if test="${addressList!=null}">
-	<c:forEach var="address" items="${addressList}" >
-		<c:if test="${!address.getIsPrimary()}" >
-			<c:out value="${address.getFirstName()}" /> <c:out value="${address.getLastName()}" />
-        	<c:out value="${address.getStreet()}" />
-            <c:out value="${address.getCity()}" /> <c:out value="${address.getState()}" /> <c:out value="${address.getZipcode()}" />
+<c:if test="${paymentList!=null}">
+	<c:forEach var="payment" items="${paymentList}" >
+		<c:if test="${!payment.getIsPrimary()}" >
+			<c:out value="${payment.getPaymentType()}" />
 			<p>
-			<a href="editAddress?id=${address.getIdaddressBook()}" class="btn btn-primary" role="button">Edit</a>
-			<a href="deleteAddress?id=${address.getIdaddressBook()}" class="btn btn-primary" role="button">Delete</a>
-			<button class="btn btn-primary" role="button">Set as default address</button>	
+			<a href="editPayment?id=${payment.getIdpayment()}" class="btn btn-primary" role="button">Edit</a>
+			<a href="deletePayment?id=${payment.getIdpayment()}" class="btn btn-primary" role="button">Delete</a>
+			<button class="btn btn-primary" role="button">Set as default payment</button>	
 			</p>
 		</c:if>
 	</c:forEach>

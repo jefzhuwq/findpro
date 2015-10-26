@@ -56,7 +56,7 @@ public class AddressController extends BasicController {
 		
 			mav.setViewName("address/address");
 		} else {
-			mav.setViewName("redirect:login?redirect=address");
+			mav.setViewName(this.getRedirect("login?redirect=address"));
 		}
 		return mav;
 	}
@@ -98,7 +98,7 @@ public class AddressController extends BasicController {
 			address.setZipcode(addressForm.getZipcode());
 			this.addressService.save(address);
 		}
-		mav.setViewName("redirect:address");
+		mav.setViewName(this.getRedirect("address"));
 		return mav;
 	}
 	
@@ -115,7 +115,7 @@ public class AddressController extends BasicController {
 				address.setIsPrimary(true);
 				this.addressService.save(address);
 			}
-			mav.setViewName("redirect:checkout");
+			mav.setViewName(this.getRedirect("checkout"));
 		}
 		return mav;
 	}
@@ -142,7 +142,7 @@ public class AddressController extends BasicController {
 			AddressBook address = this.addressService.getAddressByIdAndUserId(Integer.parseInt(id), user.getUserid());
 			if (address != null) {
 				this.addressService.deleteAddress(address.getIdaddressBook());
-				mav.setViewName("redirect:address");
+				mav.setViewName(this.getRedirect("address"));
 			}
 		}
 		return mav;

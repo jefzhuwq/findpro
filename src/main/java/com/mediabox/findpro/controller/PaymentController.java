@@ -56,7 +56,7 @@ public class PaymentController extends BasicController {
 		
 			mav.setViewName("payment/payment");
 		} else {
-			mav.setViewName("redirect:login?redirect=payment");
+			mav.setViewName(this.getRedirect("login?redirect=payment"));
 		}
 		return mav;
 	}
@@ -92,7 +92,7 @@ public class PaymentController extends BasicController {
 			}
 			this.paymentService.save(payment);
 		}
-		mav.setViewName("redirect:address");
+		mav.setViewName(this.getRedirect("address"));
 		return mav;
 	}
 	
@@ -109,7 +109,7 @@ public class PaymentController extends BasicController {
 				payment.setIsPrimary(true);
 				this.paymentService.save(payment);
 			}
-			mav.setViewName("redirect:checkout");
+			mav.setViewName(this.getRedirect("checkout"));
 		}
 		return mav;
 	}
@@ -136,7 +136,7 @@ public class PaymentController extends BasicController {
 			Payment payment = this.paymentService.getPaymentByIdAndUserId(Integer.parseInt(id), user.getUserid());
 			if (payment != null) {
 				this.paymentService.deletePayment(payment.getIdpayment());
-				mav.setViewName("redirect:payment");
+				mav.setViewName(this.getRedirect("payment"));
 			}
 		}
 		return mav;

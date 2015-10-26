@@ -38,14 +38,7 @@ import com.mediabox.findpro.service.AccountService;
 public class LoginController extends BasicController {
 	private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
 	private AccountService accountService;
-	private List<String> redirectList = Arrays.asList(new String[] {"checkout", "address"});
-	//	private MyUserDetailsService userService;
-	
-//	@Autowired(required = true)
-//	@Qualifier(value = "userDetailsService")
-//	public void setUserService(MyUserDetailsService userService) {
-//		this.userService = userService;
-//	}
+	private List<String> redirectList = Arrays.asList(new String[] {"checkout", "address", "payment"});	
 	
 	@Autowired(required = true)
 	@Qualifier(value = "accountService")
@@ -67,7 +60,7 @@ public class LoginController extends BasicController {
 			if (redirectList.contains(redirect)) {
 				mav.setViewName("redirect:" + redirect);
 			} else {
-				mav.setViewName("/menu");
+				mav.setViewName("menu");
 			}
 	        mav.addObject("sessionId", sessionId);
 	        return mav;
@@ -150,23 +143,21 @@ public class LoginController extends BasicController {
 	}
 	
 	// for 403 access denied page
-		@RequestMapping(value = "/403", method = RequestMethod.GET)
-		public ModelAndView accesssDenied() {
+	@RequestMapping(value = "/403", method = RequestMethod.GET)
+	public ModelAndView accesssDenied() {
+		ModelAndView model = new ModelAndView();
 
-			ModelAndView model = new ModelAndView();
-
-			// check if user is login
-			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-			if (!(auth instanceof AnonymousAuthenticationToken)) {
-				UserDetails userDetail = (UserDetails) auth.getPrincipal();
-				System.out.println(userDetail);
-
-				model.addObject("username", userDetail.getUsername());
-
-			}
-
-			model.setViewName("403");
-			return model;
-
+		// check if user is login
+		Authentication auth = SecurityContextHolder.getContext()
+				.getAuthentication();
+		if (!(auth instanceof AnonymousAuthenticationToken)) {
+			UserDetails userDetail = (UserDetails) auth.getPrincipal();
+			System.out.println(userDetail);
+			model.addObject("username", userDetail.getUsername());
 		}
+
+		model.setViewName("403");
+		return model;
+
+	}
 }

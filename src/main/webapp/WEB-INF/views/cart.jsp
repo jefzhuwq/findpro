@@ -27,7 +27,7 @@
 	<input type="submit" class="btn btn-primary" role="button" value="Clear cart">
 	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 	<c:if test="${cartItemList!=null && cartItemList.size()>0}">
-		<h3>Total: $<c:out value="${total}" /></h3>
+		<h3><b>Order Total: $<c:out value="${total}" /></b></h3>
 	</c:if>
 </form:form>
 

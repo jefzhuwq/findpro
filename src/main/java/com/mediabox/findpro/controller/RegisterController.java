@@ -42,9 +42,7 @@ public class RegisterController extends BasicController {
 		if (error != null) {
 			model.addObject("error", getErrorMessage(request, "SPRING_SECURITY_LAST_EXCEPTION"));
 		}
-
 		model.setViewName("register");
-
 		return model;
 	}
 	
@@ -58,7 +56,6 @@ public class RegisterController extends BasicController {
 		} else {
 			error = "Invalid username and password!";
 		}
-
 		return error;
 	}
 	
@@ -67,7 +64,7 @@ public class RegisterController extends BasicController {
 		if (bindingResult.hasErrors()) {
 			int errorCount = bindingResult.getErrorCount();
 			List<?> errorList = bindingResult.getAllErrors();
-			ModelAndView mav = new ModelAndView("/register");
+			ModelAndView mav = new ModelAndView("register");
 //			mav.addObject("error", errorCount);
 			mav.addObject("error", errorList);
 			return mav;
