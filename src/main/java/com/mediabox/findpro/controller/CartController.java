@@ -79,13 +79,5 @@ public class CartController extends BasicController {
 	
 	
 	
-	public double calculateTotal(Map<Menu, Integer> cartItemList) {
-		BigDecimal sum = new BigDecimal(0);
-		if (cartItemList != null) {
-			for (Map.Entry<Menu, Integer> cartItem : cartItemList.entrySet()) {
-				sum = sum.add(cartItem.getKey().getUnitPrice().multiply(new BigDecimal(cartItem.getValue())));
-			}
-		}
-		return sum.doubleValue();
-	}
+	
 }
